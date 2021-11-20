@@ -161,6 +161,8 @@
 		O.attack(brainmob, user) //Oh noooeeeee
 
 	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
+		user.do_attack_animation(src)
+		playsound(loc, 'sound/effects/meatslap.ogg', 50)
 		setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
 		visible_message(span_danger("[user] hits [src] with [O]!"))
 		to_chat(user, span_danger("You hit [src] with [O]!"))
@@ -298,6 +300,14 @@
 
 	// Any skillchips has been transferred over, time to empty the list.
 	LAZYCLEARLIST(skillchips)
+
+/obj/item/organ/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
+	. = ..()
+	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
+		setOrganDamage(0)
+		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
+	else
+		setOrganDamage(BRAIN_DAMAGE_DEATH)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"

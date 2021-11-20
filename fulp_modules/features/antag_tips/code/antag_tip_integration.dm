@@ -1,3 +1,9 @@
+/**
+ * Antag tips that would be nice to have:
+ * - Obsessed
+ * - Blood Brother
+ */
+
 /datum/antagonist/abductor
 	tips = ABDUCTOR_TIPS
 
@@ -6,6 +12,9 @@
 
 /datum/antagonist/cult
 	tips = CULTIST_TIPS
+
+/datum/antagonist/cult/master
+	tips = null
 
 /datum/antagonist/heretic
 	tips = HERETIC_TIPS
@@ -28,5 +37,7 @@
 /datum/antagonist/wizard/apprentice
 	tips = WIZARD_APPRENTICE_TIPS
 
-/datum/antagonist/wizard/imposter
+/datum/antagonist/wizard/apprentice/imposter
 	tips = IMPOSTER_TIPS
+	show_in_antagpanel = TRUE
+	allow_rename = TRUE

@@ -10,7 +10,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 
-	var/damage_coeff  = 1
+	var/damage_coeff = 1
 	var/list/fields
 	var/list/add_mutations = list()
 	var/list/remove_mutations = list()
@@ -22,7 +22,6 @@
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/HM in remove_mutations)
 			M.dna.remove_mutation(HM)
@@ -245,6 +244,14 @@
 	name = "\improper DNA injector (Wacky)"
 	add_mutations = list(WACKY)
 
+/obj/item/dnainjector/piglatinmut
+	name = "\improper DNA injector (Pig Latin)"
+	add_mutations = list(PIGLATIN)
+
+/obj/item/dnainjector/antipiglatin
+	name = "\improper DNA injector (Anti-Pig Latin)"
+	remove_mutations = list(PIGLATIN)
+
 /obj/item/dnainjector/antimute
 	name = "\improper DNA injector (Anti-Mute)"
 	remove_mutations = list(MUT_MUTE)
@@ -453,7 +460,6 @@
 		return FALSE
 
 	if(M.has_dna() && !(HAS_TRAIT(M, TRAIT_BADDNA)))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
 		for(var/mutation in remove_mutations)
@@ -522,7 +528,6 @@
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/pref = ""
 		var/suff = ""
@@ -535,7 +540,7 @@
 					log_msg += "(FAILED)"
 				else
 					M.dna.add_mutation(HM, MUT_EXTRA)
-					pref = "expended"
+				pref = "expended"
 			else if(research && M.client)
 				filled = TRUE
 				pref = "filled"
@@ -545,9 +550,9 @@
 				for(var/datum/symptom/symp in disease.symptoms)
 					if((symp.type == /datum/symptom/genetic_mutation)||(symp.type == /datum/symptom/viralevolution))
 						crispr_charge = TRUE
-			suff = (crispr_charge ? "with CRISPR charge" : "")
+			suff = (crispr_charge ? " with CRISPR charge" : "")
 			log_msg += "([mutation])"
-		name = "[pref] [name] [suff]"
+		name = "[pref] [name][suff]"
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE

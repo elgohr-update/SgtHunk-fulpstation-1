@@ -4,69 +4,16 @@
  */
 
 /*
- *	Role Defines, used for Antagonist jobs.
- */
-/// Bloodsuckers - Defines the role for preferences
-#define ROLE_BLOODSUCKER "Bloodsucker"
-/// Monster Hunters - Defines the role for preferences
-#define ROLE_MONSTERHUNTER "Monster Hunter"
-
-/*
- *	Source Trait Defines
- */
-/// Source trait for Bloodsuckers/Monster Hunters/Vassals
-#define BLOODSUCKER_TRAIT "bloodsucker"
-
-/*
  *	Martial art Defines
  */
 /// Used in hunterfu.dm
 #define MARTIALART_HUNTERFU "hunterfu"
+/// Used in velvet_fu.dm
+#define MARTIALART_VELVETFU "velvetfu"
 /// Used in deputy_block.dm
-#define MARTIALART_DEPUTYBLOCK "deputyblock"
+#define MARTIALART_DEPUTYBLOCK "deputy blocking"
 /// Used in bloodsucker_life.dm
-#define MARTIALART_FRENZYGRAB "FrenzyGrab"
-
-/*
- *	Bloodsucker Defines
- */
-/// Your heart doesn't beat.
-#define TRAIT_NOPULSE "nopulse"
-/// Falsifies Health analyzers
-#define TRAIT_MASQUERADE "masquerade"
-/// Your body is literal room temperature. Does not make you immune to the temp.
-#define TRAIT_COLDBLOODED "coldblooded"
-/// Used for Bloodsucker's LifeTick() signal
-#define COMSIG_LIVING_BIOLOGICAL_LIFE "biological_life"
-/// Used for determining the rate at which a bloodsucker regens
-#define BS_BLOOD_VOLUME_MAX_REGEN 700
-/// Frenzy Thresholds
-#define FRENZY_THRESHOLD_NORMAL 25
-#define FRENZY_THRESHOLD_HIGHER 200
-#define FRENZY_THRESHOLD_EXIT 250
-/// Antagonist checks
-#define IS_BLOODSUCKER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodsucker))
-#define IS_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal))
-#define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter))
-#define STATUS_EFFECT_MASQUERADE /datum/status_effect/masquerade
-/* Clan defines
-*/
-/// More prone to Frenzy & Brawn/Punches deal more damage
-#define CLAN_BRUJAH "Brujah Clan"
-/// Can't use Masquerade, gets Bad Back quirk, Disfigured Trait & Gains the ability to Ventcrawl.
-#define CLAN_NOSFERATU "Nosferatu Clan"
-/// Weaker to HunterFu, burns in the Chapel, Can mutate their Vassals (who cannot be deconverted via Mindshielding) & Can revive dead people via the Persuasion Rack.
-#define CLAN_TREMERE "Tremere Clan"
-/// Cant drink blood out of mindless mobs, cant rank up, instead ranks their favorite vassal up.
-#define CLAN_VENTRUE "Ventrue Clan"
-/// Constant hallucinations & Bluespace Prophet traumas - Beefmen cannot join this.
-#define CLAN_MALKAVIAN "Malkavian Clan"
-/* Clan defines
-*/
-// Tremere
-#define TREMERE_ZOMBIE "Zombie - Revives"
-#define TREMERE_HUSK "Husk - Drinks all their Blood"
-#define TREMERE_BAT "Bat - Bat Form"
+#define MARTIALART_FRENZYGRAB "frenzy grabbing"
 
 /*
  *	Deputy Defines
@@ -76,31 +23,51 @@
 #define TRAIT_SCIENCEDEPUTY "sciencedeputy"
 #define TRAIT_SUPPLYDEPUTY "supplydeputy"
 #define TRAIT_SERVICEDEPUTY "servicedeputy"
-/// Used to assign the Service deputy, since TG doesnt have such a thing (Who knows why, its great!)
+/// Used to assign the Service deputy, since TG doesnt have such a thing
 #define SEC_DEPT_SERVICE "Service"
 
 /*
  *	Misc Defines
  */
+/// Defines the bullet type for Joel's gun, used in joel_gun.dm
+#define CALIBER_C22 ".c22"
 /// Human sub-species defines
+#define SPECIES_BEEFMAN "beefman"
 #define isbeefman(A) (is_species(A,/datum/species/beefman))
 /// Defines the Mentorhelp's Mentorsay button
 #define COMSIG_KB_ADMIN_MSAY_DOWN "keybinding_mentor_msay_down"
+///Job defines for Spawners
+#define ROLE_BEEFMAN_CYTOLOGY "Beefman Cytology"
+#define ROLE_BEEFMAN_STATION "Beefman Station"
 
 /*
- *	Antag Tip Defines NOTE: Monster hunter, bloodsucker and vassal don't have any HTMLs! Willard will have to add them in.
+ *	Antag Tip Defines
  */
+///Antag Tips - Abductors
 #define ABDUCTOR_TIPS "abductor"
+///Antag Tips - Bloodsuckers
 #define BLOODSUCKER_TIPS "bloodsucker"
+///Antag Tips - Changelings
 #define CHANGELING_TIPS "changeling"
+///Antag Tips - Cultists
 #define CULTIST_TIPS "cultist"
+///Antag Tips - Heretics
 #define HERETIC_TIPS "heretic"
+///Antag Tips - Imposter Wizard
 #define IMPOSTER_TIPS "imposter"
+///Antag Tips - Malfunctional AIs
 #define MALF_TIPS "malf_ai"
+///Antag Tips - Monster Hunters
 #define MONSTERHUNTER_TIPS "monsterhunter"
+///Antag Tips - Nuclear Operatives
 #define NUKIE_TIPS "nukie"
+///Antag Tips - Revolutionaries
 #define REVOLUTIONARY_TIPS "revolutionary"
+///Antag Tips - Traitor
 #define TRAITOR_TIPS "traitor"
+///Antag Tips - Vassals
 #define VASSAL_TIPS "vassal"
+///Antag Tips - Wizard Apprentice
 #define WIZARD_APPRENTICE_TIPS "wiz_apprentice"
+///Antag Tips - Wizard
 #define WIZARD_TIPS "wizard"
