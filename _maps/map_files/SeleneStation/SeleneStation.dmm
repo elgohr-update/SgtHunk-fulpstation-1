@@ -11438,7 +11438,7 @@
 	name = "Medical blue corner"
 	},
 /obj/machinery/light/directional/west,
-/obj/item/clothing/under/bodysash/chemist,
+/obj/item/clothing/under/bodysash/medical/chemist,
 /obj/machinery/requests_console/directional/west{
 	department = "Chemistry";
 	departmentType = 2;
@@ -16590,6 +16590,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "esY" = (
@@ -18342,7 +18343,7 @@
 	color = "#73c2fb";
 	name = "Medical blue corner"
 	},
-/obj/item/clothing/under/bodysash/paramedic,
+/obj/item/clothing/under/bodysash/medical/paramedic,
 /obj/machinery/camera/directional/south{
 	c_tag = "Medical - Storage";
 	network = list("ss13", "medbay")
@@ -18719,6 +18720,10 @@
 /obj/item/bedsheet/medical,
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"eWx" = (
+/obj/effect/spawner/xmastree,
+/turf/open/floor/carpet,
+/area/service/chapel)
 "eWN" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law,
@@ -32170,7 +32175,7 @@
 	color = "#73c2fb";
 	name = "Medical blue corner"
 	},
-/obj/item/clothing/under/bodysash/cmo,
+/obj/item/clothing/under/bodysash/medical/cmo,
 /obj/machinery/light/directional/south,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medical - CMO Office";
@@ -39373,7 +39378,6 @@
 /turf/open/floor/wood,
 /area/service/library)
 "krE" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	color = "#4169E1";
 	dir = 1;
@@ -41777,6 +41781,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/camera/directional/east{
+	c_tag = "Public - Game Room Hall"
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "kVJ" = (
@@ -47981,14 +47988,13 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Public - Dorms Hall";
-	dir = 10
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/camera/directional/south{
+	c_tag = "Public - Dorms Hall"
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "mwM" = (
@@ -48461,6 +48467,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/spawner/xmastree,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "mCQ" = (
@@ -52896,7 +52903,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "nIs" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	color = "#4169E1";
 	dir = 1;
@@ -54857,6 +54863,12 @@
 	name = "Engineering yellow corner"
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/requests_console/directional/north{
+	announcementConsole = 1;
+	department = "Telecomms Admin";
+	departmentType = 5;
+	name = "Telecomms Requests Console"
+	},
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "oke" = (
@@ -73346,11 +73358,11 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "tih" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Chapel Library"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/public/glass{
+	name = "Art Gallery"
+	},
 /turf/open/floor/carpet/royalblue,
 /area/service/library/artgallery)
 "tit" = (
@@ -73464,10 +73476,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Public - Game Room Hall";
-	dir = 9
 	},
 /obj/effect/turf_decal/tile/neutral{
 	color = "#000000";
@@ -74382,7 +74390,6 @@
 "tvt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/holopad,
-/obj/effect/spawner/xmastree,
 /turf/open/floor/carpet,
 /area/service/chapel)
 "tvw" = (
@@ -129871,7 +129878,7 @@ ttg
 xsA
 eMm
 xJe
-xJe
+eWx
 tvN
 xJe
 oQj
