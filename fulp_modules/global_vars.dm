@@ -61,12 +61,12 @@ GLOBAL_LIST_INIT(eyes_beefman, list(
 ))
 
 GLOBAL_LIST_INIT(mouths_beefman, list(
-	"Frown1",
-	"Frown2",
-	"Grit1",
-	"Grit2",
-	"Smile1",
-	"Smile2",
+	"Frown",
+	"Dissapointed",
+	"Grit",
+	"Gritting Smile",
+	"Smile",
+	"Smirk",
 ))
 
 GLOBAL_LIST_INIT(russian_names, list(
@@ -227,4 +227,11 @@ GLOBAL_LIST_INIT(beef_names, list(
 	"Sear",
 	"Broil",
 	"Fry",
+))
+
+GLOBAL_LIST_INIT(beefmen_traumas, list(
+	"Strangers" = /datum/brain_trauma/mild/phobia/strangers,
+	"Hallucinations" = /datum/brain_trauma/mild/hallucinations,
+	"Ocky Icky" = /datum/brain_trauma/mild/phobia/ocky_icky,
+	"Hypnotic Stupor" = /datum/brain_trauma/severe/hypnotic_stupor,
 ))
