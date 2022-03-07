@@ -79,9 +79,6 @@
 		return FALSE
 	PayCost()
 	ActivatePower()
-	if(power_flags & BP_AM_SINGLEUSE)
-		RemoveAfterUse()
-		return TRUE
 	if(!(power_flags & BP_AM_TOGGLE) || !active)
 		StartCooldown() // Must come AFTER UpdateButtonIcon(), otherwise icon will revert!
 	return TRUE
@@ -126,7 +123,7 @@
 		to_chat(user, span_warning("You can't do this while you are unconcious!"))
 		return FALSE
 	// Incapacitated?
-	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE)))
+	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS, IGNORE_GRAB)))
 		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
 	// Constant Cost (out of blood)
@@ -171,16 +168,19 @@
 	bloodsuckerdatum_power?.update_hud()
 
 /datum/action/bloodsucker/proc/ActivatePower()
+	active = TRUE
 	if(power_flags & BP_AM_TOGGLE)
-		active = TRUE
 		RegisterSignal(owner, COMSIG_LIVING_BIOLOGICAL_LIFE, .proc/UsePower)
 
-	owner.log_message("used [src].", LOG_ATTACK, color="red")
+	owner.log_message("used [src] at the cost of [bloodcost].", LOG_ATTACK, color="red")
 	UpdateButtonIcon()
 
 /datum/action/bloodsucker/proc/DeactivatePower()
 	if(power_flags & BP_AM_TOGGLE)
 		UnregisterSignal(owner, COMSIG_LIVING_BIOLOGICAL_LIFE)
+	if(power_flags & BP_AM_SINGLEUSE)
+		RemoveAfterUse()
+		return
 	active = FALSE
 	UpdateButtonIcon()
 	StartCooldown()
@@ -202,6 +202,7 @@
 /// Checks to make sure this power can stay active
 /datum/action/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
 	if(!active)
+		owner.balloon_alert(owner, "[src] cancelled...")
 		return FALSE
 	if(!user)
 		return FALSE

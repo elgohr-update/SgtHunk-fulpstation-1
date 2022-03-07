@@ -39,6 +39,13 @@
 #define JOB_DEPUTY_SCI "Science Deputy"
 #define JOB_DEPUTY_SRV "Service Deputy"
 
+#define SECHUD_BRIG_PHYSICIAN "hudbrigphysician"
+#define SECHUD_DEPUTY "huddeputy"
+#define SECHUD_DEPUTY_ENGINEERING "hudengineeringdeputy"
+#define SECHUD_DEPUTY_MEDICAL "hudmedicaldeputy"
+#define SECHUD_DEPUTY_SCIENCE "hudsciencedeputy"
+#define SECHUD_DEPUTY_SUPPLY "hudsupplydeputy"
+#define SECHUD_DEPUTY_SERVICE "hudservicedeputy"
 
 /**
  * # SPECIES
@@ -52,6 +59,15 @@
 ///Job define for the Beefmen Station (Space) Spawner
 #define ROLE_BEEFMAN_STATION "Beefman Station Inhabitant"
 
+/**
+ * # PRISON DEFINES
+ */
+#define ACCOUNT_PRISON "PRS"
+#define ACCOUNT_PRISON_NAME "Prison Budget"
+#define COMSIG_PRISON_OBJECTIVE_COMPLETED "prison_objective_complete"
+#define COMSIG_PRISON_OBJECTIVE_FAILED "prison_objective_failed"
+#define PERMABRIG_SHUTTLE_OBJECTIVE_SUCCESS "Permabrig Success"
+#define PERMABRIG_SHUTTLE_OBJECTIVE_FAILURE "Permabrig Failure"
 
 /**
  * # ANTAG TIPS
