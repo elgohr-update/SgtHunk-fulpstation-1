@@ -40,6 +40,7 @@ GLOBAL_PROTECT(mentor_verbs)
 
 GLOBAL_LIST_INIT(mentor_verbs, list(
 	/client/proc/cmd_mentor_say,
+	/client/proc/mentor_requests,
 ))
 
 // MUSIC //
@@ -55,6 +56,7 @@ GLOBAL_LIST_INIT(fulp_ban_list, list(
 	"Antagonist Positions" = list(
 		ROLE_BLOODSUCKER,
 		ROLE_MONSTERHUNTER,
+		ROLE_INFILTRATOR,
 	),
 ))
 
