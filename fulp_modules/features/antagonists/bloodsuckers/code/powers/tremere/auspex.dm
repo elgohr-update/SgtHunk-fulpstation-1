@@ -8,7 +8,7 @@
  *	Level 5 - Cloak of Darkness until clicking an area, teleports the user to the selected area, causes nearby people to fall asleep.
  */
 
-// Look to /obj/effect/proc_holder/spell/pointed/void_blink for help.
+// Look to /datum/action/cooldown/spell/pointed/void_phase for help.
 
 /datum/action/bloodsucker/targeted/tremere/auspex
 	name = "Level 1: Auspex"
@@ -16,7 +16,7 @@
 	level_current = 1
 	desc = "Hide yourself within a Cloak of Darkness, click on an area to teleport up to 2 tiles away."
 	button_icon_state = "power_auspex"
-	power_explanation = "<b>Level 1: Auspex</b>:\n\
+	power_explanation = "Level 1: Auspex:\n\
 		When Activated, you will be hidden in a Cloak of Darkness.\n\
 		Click any area up to 2 tile away to teleport there, ending the Power."
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
@@ -31,7 +31,7 @@
 	upgraded_power = /datum/action/bloodsucker/targeted/tremere/auspex/three
 	level_current = 2
 	desc = "Hide yourself within a Cloak of Darkness, click on an area to teleport up to 3 tiles away."
-	power_explanation = "<b>Level 2: Auspex</b>:\n\
+	power_explanation = "Level 2: Auspex:\n\
 		When Activated, you will be hidden in a Cloak of Darkness.\n\
 		Click any area up to 3 tile away to teleport there, ending the Power."
 	bloodcost = 10
@@ -43,19 +43,19 @@
 	upgraded_power = /datum/action/bloodsucker/targeted/tremere/auspex/advanced
 	level_current = 3
 	desc = "Hide yourself within a Cloak of Darkness, click on an area to teleport."
-	power_explanation = "<b>Level 3: Auspex</b>:\n\
+	power_explanation = "Level 3: Auspex:\n\
 		When Activated, you will be hidden in a Cloak of Darkness.\n\
 		Click any area up to teleport there, ending the Power."
 	bloodcost = 15
 	cooldown = 8 SECONDS
-	target_range = 6
+	target_range = null
 
 /datum/action/bloodsucker/targeted/tremere/auspex/advanced
 	name = "Level 4: Auspex"
 	upgraded_power = /datum/action/bloodsucker/targeted/tremere/auspex/advanced/two
 	level_current = 4
 	desc = "Hide yourself within a Cloak of Darkness, click on an area to teleport, leaving nearby people bleeding."
-	power_explanation = "<b>Level 4: Auspex</b>:\n\
+	power_explanation = "Level 4: Auspex:\n\
 		When Activated, you will be hidden in a Cloak of Darkness.\n\
 		Click any area up to teleport there, ending the Power and causing people at your end location to start bleeding."
 	background_icon_state = "tremere_power_gold_off"
@@ -63,19 +63,18 @@
 	background_icon_state_off = "tremere_power_gold_off"
 	bloodcost = 20
 	cooldown = 6 SECONDS
-	target_range = 6
+	target_range = null
 
 /datum/action/bloodsucker/targeted/tremere/auspex/advanced/two
 	name = "Level 5: Auspex"
 	upgraded_power = null
 	level_current = 5
 	desc = "Hide yourself within a Cloak of Darkness, click on an area to teleport, leaving nearby people bleeding and asleep."
-	power_explanation = "<b>Level 5: Auspex</b>:\n\
+	power_explanation = "Level 5: Auspex:\n\
 		When Activated, you will be hidden in a Cloak of Darkness.\n\
 		Click any area up to teleport there, ending the Power and causing people at your end location to fall asleep for 10 seconds."
 	bloodcost = 25
 	cooldown = 8 SECONDS
-
 
 /datum/action/bloodsucker/targeted/tremere/auspex/CheckValidTarget(atom/target_atom)
 	. = ..()
@@ -83,7 +82,7 @@
 		return FALSE
 	return isturf(target_atom)
 
-/datum/action/bloodsucker/targeted/tremere/auspex/ActivatePower()
+/datum/action/bloodsucker/targeted/tremere/auspex/ActivatePower(trigger_flags)
 	. = ..()
 	owner.AddElement(/datum/element/digitalcamo)
 	animate(owner, alpha = 15, time = 1 SECONDS)

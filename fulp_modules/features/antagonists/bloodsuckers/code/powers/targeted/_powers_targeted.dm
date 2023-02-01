@@ -2,8 +2,9 @@
 /datum/action/bloodsucker/targeted
 	power_flags = BP_AM_TOGGLE
 
-	var/obj/effect/proc_holder/bloodsucker/bs_proc_holder
-	var/target_range = 99
+	///If set, how far the target has to be for the power to work.
+	var/target_range
+	///Message sent to chat when clicking on the power, before you use it.
 	var/prefire_message = ""
 	///Most powers happen the moment you click. Some, like Mesmerize, require time and shouldn't cost you if they fail.
 	var/power_activates_immediately = TRUE
@@ -13,39 +14,43 @@
 /// Modify description to add notice that this is aimed.
 /datum/action/bloodsucker/targeted/New(Target)
 	desc += "<br>\[<i>Targeted Power</i>\]"
-	. = ..()
-	// Create Proc Holder for intercepting clicks
-	bs_proc_holder = new()
-	bs_proc_holder.linked_power = src
+	return ..()
 
-/datum/action/bloodsucker/targeted/Trigger(trigger_flags)
+/datum/action/bloodsucker/targeted/Remove(mob/living/remove_from)
+	. = ..()
+	if(remove_from.click_intercept == src)
+		unset_click_ability(remove_from)
+
+/datum/action/bloodsucker/targeted/Trigger(trigger_flags, atom/target)
 	if(active && CheckCanDeactivate())
 		DeactivatePower()
 		return FALSE
-	if(!CheckCanPayCost(owner) || !CheckCanUse(owner))
+	if(!CheckCanPayCost(owner) || !CheckCanUse(owner, trigger_flags))
 		return FALSE
 
-	ActivatePower()
-	// Create & Link Targeting Proc
-	var/mob/living/user = owner
-	if(user.ranged_ability)
-		user.ranged_ability.remove_ranged_ability()
-	bs_proc_holder.add_ranged_ability(user)
+	ActivatePower(trigger_flags)
 	if(prefire_message != "")
 		to_chat(owner, span_announce("[prefire_message]"))
-	return TRUE
+	if(target)
+		return InterceptClickOn(owner, null, target)
+
+	var/datum/action/cooldown/already_set = owner.click_intercept
+	if(already_set == src)
+		// if we clicked ourself and we're already set, unset and return
+		return unset_click_ability(owner)
+
+	else if(istype(already_set))
+		// if we have an active set already, unset it before we set our's
+		already_set.unset_click_ability(owner)
+
+	return set_click_ability(owner)
 
 /datum/action/bloodsucker/targeted/DeactivatePower()
 	if(power_flags & BP_AM_TOGGLE)
 		STOP_PROCESSING(SSprocessing, src)
 	active = FALSE
-	DeactivateRangedAbility()
-	UpdateButtons()
+	build_all_button_icons()
 //	..() // we don't want to pay cost here
-
-/// Only Turned off when CLICK is disabled...aka, when you successfully clicked
-/datum/action/bloodsucker/targeted/proc/DeactivateRangedAbility()
-	bs_proc_holder.remove_ranged_ability()
 
 /// Check if target is VALID (wall, turf, or character?)
 /datum/action/bloodsucker/targeted/proc/CheckValidTarget(atom/target_atom)
@@ -55,11 +60,12 @@
 
 /// Check if valid target meets conditions
 /datum/action/bloodsucker/targeted/proc/CheckCanTarget(atom/target_atom)
-	// Out of Range
-	if(!(target_atom in view(target_range, owner)))
-		if(target_range > 1) // Only warn for range if it's greater than 1. Brawn doesn't need to announce itself.
-			owner.balloon_alert(owner, "out of range.")
-		return FALSE
+	if(target_range)
+		// Out of Range
+		if(!(target_atom in view(target_range, owner)))
+			if(target_range > 1) // Only warn for range if it's greater than 1. Brawn doesn't need to announce itself.
+				owner.balloon_alert(owner, "out of range.")
+			return FALSE
 	return istype(target_atom)
 
 /// Click Target
@@ -71,7 +77,7 @@
 	if(!CheckCanPayCost() || !CheckCanUse(owner) || !CheckCanTarget(target_atom))
 		return TRUE
 	power_in_use = TRUE // Lock us into this ability until it successfully fires off. Otherwise, we pay the blood even if we fail.
-	FireTargetedPower(target_atom) // We use this instead of ActivatePower(), which has no input
+	FireTargetedPower(target_atom) // We use this instead of ActivatePower(trigger_flags), which has no input
 	// Skip this part so we can return TRUE right away.
 	if(power_activates_immediately)
 		PowerActivatedSuccessfully() // Mesmerize pays only after success.
@@ -84,14 +90,18 @@
 
 /// The power went off! We now pay the cost of the power.
 /datum/action/bloodsucker/targeted/proc/PowerActivatedSuccessfully()
+	unset_click_ability(owner)
 	PayCost()
-	DeactivatePower()
 	StartCooldown()	// Do AFTER UpdateIcon() inside of DeactivatePower. Otherwise icon just gets wiped.
+	DeactivatePower()
 
-/// Target Proc Holder
-/obj/effect/proc_holder/bloodsucker
-	///The linked Bloodsucker power
-	var/datum/action/bloodsucker/targeted/linked_power
+/datum/action/bloodsucker/targeted/proc/InterceptClickOn(mob/living/caller, params, atom/target)
+	ClickWithPower(target)
 
-/obj/effect/proc_holder/bloodsucker/InterceptClickOn(mob/living/caller, params, atom/targeted_atom)
-	return linked_power.ClickWithPower(targeted_atom)
+/datum/action/bloodsucker/proc/set_click_ability(mob/on_who)
+	on_who.click_intercept = src
+	return TRUE
+
+/datum/action/bloodsucker/proc/unset_click_ability(mob/on_who)
+	on_who.click_intercept = null
+	return TRUE

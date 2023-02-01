@@ -5,7 +5,15 @@
 "b" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"c" = (
+/obj/effect/turf_decal/mining,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/ruin/powered)
 "d" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/ruin/powered)
+"e" = (
+/obj/effect/turf_decal/mining/survival,
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/ruin/powered)
 "f" = (
@@ -23,6 +31,12 @@
 /obj/item/gps/computer,
 /obj/structure/tubes,
 /turf/open/floor/pod/dark,
+/area/ruin/powered)
+"i" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
 /area/ruin/powered)
 "j" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -50,9 +64,7 @@
 /area/lavaland/surface/outdoors)
 "o" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/asteroid/goliath/beast{
-	health = 0
-	},
+/obj/effect/mob_spawn/corpse/goliath,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "p" = (
@@ -103,6 +115,12 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"w" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/ruin/powered)
 "x" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -110,6 +128,12 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"y" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/ruin/powered)
 "z" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
@@ -121,32 +145,6 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"B" = (
-/obj/effect/turf_decal/mining/survival{
-	dir = 1
-	},
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/ruin/powered)
-"I" = (
-/obj/effect/turf_decal/mining/survival{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/ruin/powered)
-"P" = (
-/obj/effect/turf_decal/mining,
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/ruin/powered)
-"S" = (
-/obj/effect/turf_decal/mining/survival,
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/ruin/powered)
-"Y" = (
-/obj/effect/turf_decal/mining/survival{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/ruin/powered)
 
 (1,1,1) = {"
 a
@@ -180,7 +178,7 @@ a
 b
 d
 d
-I
+i
 d
 d
 b
@@ -195,7 +193,7 @@ d
 f
 k
 p
-S
+e
 b
 b
 b
@@ -204,7 +202,7 @@ b
 a
 b
 b
-B
+y
 g
 l
 q
@@ -221,7 +219,7 @@ d
 h
 m
 r
-P
+c
 z
 b
 b
@@ -232,7 +230,7 @@ b
 b
 d
 d
-Y
+w
 d
 d
 z

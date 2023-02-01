@@ -2,7 +2,7 @@
 	name = "Predatory Lunge"
 	desc = "Spring at your target to grapple them without warning, or tear the dead's heart out. Attacks from concealment or the rear may even knock them down if strong enough."
 	button_icon_state = "power_lunge"
-	power_explanation = "<b>Predatory Lunge</b>:\n\
+	power_explanation = "Predatory Lunge:\n\
 		Click any player to, after a short delay, dash at them.\n\
 		When lunging at someone, you will grab them, immediately starting off at aggressive.\n\
 		There is an exception to this, those wearing Riot gear, and Monster Hunters, will be passively grabbed instead.\n\
@@ -15,10 +15,9 @@
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 10
 	cooldown = 10 SECONDS
-	target_range = 6
 	power_activates_immediately = FALSE
 
-/datum/action/bloodsucker/targeted/lunge/CheckCanUse(mob/living/carbon/user)
+/datum/action/bloodsucker/targeted/lunge/CheckCanUse(mob/living/carbon/user, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -87,7 +86,7 @@
 		var/y_offset = base_y + rand(-3, 3)
 		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 
-	if(!do_after(owner, 4 SECONDS, extra_checks = CALLBACK(src, .proc/CheckCanTarget, target_atom)))
+	if(!do_after(owner, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(CheckCanTarget), target_atom)))
 		animate(owner, pixel_x = base_x, pixel_y = base_y, time = 1)
 		STOP_PROCESSING(SSprocessing, src)
 		return FALSE
@@ -130,7 +129,7 @@
 		owner.visible_message(
 			span_warning("[owner] tears into [target]'s chest!"),
 			span_warning("You tear into [target]'s chest!"))
-		var/obj/item/organ/heart/myheart_now = locate() in target.internal_organs
+		var/obj/item/organ/internal/heart/myheart_now = locate() in target.internal_organs
 		if(myheart_now)
 			myheart_now.Remove(target)
 			user.put_in_hands(myheart_now)

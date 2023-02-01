@@ -71,7 +71,7 @@
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/lair/check_completion()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(bloodsuckerdatum && bloodsuckerdatum.coffin && bloodsuckerdatum.lair)
+	if(bloodsuckerdatum && bloodsuckerdatum.coffin && bloodsuckerdatum.bloodsucker_lair_area)
 		return TRUE
 	return FALSE
 
@@ -108,7 +108,7 @@
 /datum/objective/bloodsucker/conversion/command/check_completion()
 	var/list/vassal_jobs = get_vassal_occupations()
 	for(var/datum/job/checked_job in vassal_jobs)
-		if((checked_job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) || checked_job.title == JOB_QUARTERMASTER) // Exception because not even the code considers the QM part of command
+		if(checked_job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			return TRUE // We only need one, so we stop as soon as we get a match
 	return FALSE
 
@@ -184,7 +184,7 @@
 
 	var/list/all_items = owner.current.get_all_contents()
 	var/heart_count = 0
-	for(var/obj/item/organ/heart/current_hearts in all_items)
+	for(var/obj/item/organ/internal/heart/current_hearts in all_items)
 		if(current_hearts.organ_flags & ORGAN_SYNTHETIC) // No robo-hearts allowed
 			continue
 		heart_count++
@@ -227,28 +227,6 @@
 //     CLAN OBJECTIVES      //
 //////////////////////////////
 
-/// Drink certain amount of Blood while in a Frenzy - Brujah Clan Objective
-/datum/objective/bloodsucker/gourmand/brujah
-	name = "brujah gourmand"
-//	NOTE: This is a copy paste from default Gourmand objective.
-
-// EXPLANATION
-/datum/objective/bloodsucker/gourmand/brujah/update_explanation_text()
-	. = ..()
-	explanation_text = "While in a Frenzy, using your Feed ability, drink [target_amount] units of Blood."
-
-// WIN CONDITIONS?
-/datum/objective/bloodsucker/gourmand/brujah/check_completion()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.current.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(!bloodsuckerdatum)
-		return FALSE
-	var/stolen_blood = bloodsuckerdatum.frenzy_blood_drank
-	if(stolen_blood >= target_amount)
-		return TRUE
-	return FALSE
-
-//////////////////////////////////////////////////////////////////////////////////////
-
 /// Steal the Archive of the Kindred - Nosferatu Clan objective
 /datum/objective/bloodsucker/kindred
 	name = "steal kindred"
@@ -266,14 +244,9 @@
 	if(!bloodsuckerdatum)
 		return FALSE
 
-	for(var/datum/mind/bloodsucker_minds in bloodsuckerdatum.clan?.members)
-		var/datum/antagonist/bloodsucker/allsuckers = bloodsucker_minds.has_antag_datum(/datum/antagonist/bloodsucker)
-		if(allsuckers.my_clan != CLAN_NOSFERATU)
-			continue
-		if(!isliving(bloodsucker_minds.current))
-			continue
-		var/list/all_items = allsuckers.owner.current.get_all_contents()
-		for(var/obj/items in all_items)
+	for(var/mob/living/all_nosferatu as anything in GLOB.bloodsucker_clan_members[CLAN_NOSFERATU])
+		var/list/all_items = all_nosferatu.get_all_contents()
+		for(var/obj/items as anything in all_items)
 			if(istype(items, /obj/item/book/kindred))
 				return TRUE
 	return FALSE
@@ -310,10 +283,10 @@
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/embrace/check_completion()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.current.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(!bloodsuckerdatum || bloodsuckerdatum.my_clan != CLAN_VENTRUE)
+	if(!bloodsuckerdatum)
 		return FALSE
 	for(var/datum/antagonist/vassal/vassaldatum in bloodsuckerdatum.vassals)
-		if(vassaldatum.owner && vassaldatum.favorite_vassal)
+		if(IS_FAVORITE_VASSAL(vassaldatum.owner.current))
 			if(vassaldatum.owner.has_antag_datum(/datum/antagonist/bloodsucker))
 				return TRUE
 	return FALSE
@@ -370,7 +343,27 @@
 
 //////////////////////////////
 //    REMOVED OBJECTIVES    //
+// NOT GUARANTEED FUNCTIONAL//
 //////////////////////////////
+
+/// Drink certain amount of Blood while in a Frenzy. NOTE: This is a copy paste from default Gourmand objective.
+/datum/objective/bloodsucker/gourmand/brujah
+	name = "brujah gourmand"
+
+// EXPLANATION
+/datum/objective/bloodsucker/gourmand/brujah/update_explanation_text()
+	. = ..()
+	explanation_text = "While in a Frenzy, using your Feed ability, drink [target_amount] units of Blood."
+
+// WIN CONDITIONS?
+/datum/objective/bloodsucker/gourmand/brujah/check_completion()
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.current.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+	if(!bloodsuckerdatum)
+		return FALSE
+	var/stolen_blood = bloodsuckerdatum.frenzy_blood_drank
+	if(stolen_blood >= target_amount)
+		return TRUE
+	return FALSE
 
 // NOTE: Look up /assassinate in objective.dm for inspiration.
 /// Vassalize a target.

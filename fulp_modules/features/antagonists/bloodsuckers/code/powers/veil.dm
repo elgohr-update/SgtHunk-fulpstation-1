@@ -2,13 +2,13 @@
 	name = "Veil of Many Faces"
 	desc = "Disguise yourself in the illusion of another identity."
 	button_icon_state = "power_veil"
-	power_explanation = "<b>Veil of Many Faces</b>:\n\
+	power_explanation = "Veil of Many Faces: \n\
 		Activating Veil of Many Faces will shroud you in smoke and forge you a new identity.\n\
 		Your name and appearance will be completely randomized, and turning the ability off again will undo it all.\n\
 		Clothes, gear, and Security/Medical HUD status is kept the same while this power is active."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_FRENZY
-	purchase_flags = VASSAL_CAN_BUY
+	purchase_flags = BLOODSUCKER_DEFAULT_POWER|VASSAL_CAN_BUY
 	bloodcost = 15
 	constant_bloodcost = 0.1
 	cooldown = 10 SECONDS
@@ -27,7 +27,7 @@
 	var/prev_disfigured
 	var/list/prev_features // For lizards and such
 
-/datum/action/bloodsucker/veil/ActivatePower()
+/datum/action/bloodsucker/veil/ActivatePower(trigger_flags)
 	. = ..()
 	cast_effect() // POOF
 //	if(blahblahblah)
@@ -77,9 +77,6 @@
 	if(prev_disfigured)
 		REMOVE_TRAIT(user, TRAIT_DISFIGURED, null)
 	user.dna.features = random_features()
-
-	// Beefmen
-	proof_beefman_features(user.dna.features)
 
 	// Apply Appearance
 	user.update_body() // Outfit and underware, also body.

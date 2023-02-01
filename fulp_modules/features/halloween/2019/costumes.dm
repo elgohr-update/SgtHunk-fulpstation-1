@@ -193,12 +193,17 @@
 	name = "trickster's headband"
 	desc = "Smells like expired ceasar dressing."
 	icon_state = "joseph_headband"
+
 /obj/item/clothing/neck/scarf/tricksters_scarf
 	name = "trickster's scarf"
 	desc = "The real trick is that it's held in place with a stiff wire."
 	icon = 'fulp_modules/features/halloween/2019/2019_icons.dmi'
 	worn_icon = 'fulp_modules/features/halloween/2019/2019_icons_worn.dmi'
 	icon_state = "joseph_scarf"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	flags_1 = null
 
 /obj/item/clothing/shoes/tricksters_boots
 	name = "trickster's boots"
@@ -234,25 +239,27 @@
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
-/obj/item/clothing/head/hardhat/sans
+/obj/item/clothing/head/utility/hardhat/sans
 	name = "massive foam skull"
 	desc = "What's this guy's name again? Sand? Sailsbury?"
 	icon = 'fulp_modules/features/halloween/2019/2019_icons.dmi'
 	worn_icon = 'fulp_modules/features/halloween/2019/2019_icons_worn.dmi'
 	icon_state = "hardhat0_sans"
-	on = FALSE
 	hat_type = "sans"
-	armor = list(MELEE = -10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0) //just dodge, duh
+	armor_type = /datum/armor/sans_the_skeleton
 	resistance_flags = null
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 
+/datum/armor/sans_the_skeleton
+	melee = -10 // just dodge, huh
+
 /obj/item/storage/box/halloween/edition_19/sans
 	theme_name = "2019's Sans"
 	costume_contents = list(
 		/obj/item/clothing/under/costume/costume_2019/sans,
-		/obj/item/clothing/head/hardhat/sans,
+		/obj/item/clothing/head/utility/hardhat/sans,
 	)
 
 
@@ -271,7 +278,7 @@
 	icon = 'fulp_modules/features/halloween/2019/2019_icons.dmi'
 	worn_icon = 'fulp_modules/features/halloween/2019/2019_icons_worn.dmi'
 	icon_state = "varia_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	clothing_flags = NONE
 	min_cold_protection_temperature = null
 	max_heat_protection_temperature = null
@@ -287,7 +294,7 @@
 	worn_icon = 'fulp_modules/features/halloween/2019/2019_icons_worn.dmi'
 	icon_state = "hardsuit0-varia"
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	clothing_flags = NONE
 	min_cold_protection_temperature = null
 	max_heat_protection_temperature = null

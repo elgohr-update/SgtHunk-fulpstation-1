@@ -2,7 +2,7 @@
 	name = "Trespass"
 	desc = "Become mist and advance two tiles in one direction. Useful for skipping past doors and barricades."
 	button_icon_state = "power_tres"
-	power_explanation = "<b>Trespass</b>:\n\
+	power_explanation = "Trespass:\n\
 		Click anywhere from 1-2 tiles away from you to teleport.\n\
 		This power goes through all obstacles except Walls.\n\
 		Higher levels decrease the sound played from using the Power, and increase the speed of the transition."
@@ -15,7 +15,7 @@
 	//target_range = 2
 	var/turf/target_turf // We need to decide where we're going based on where we clicked. It's not actually the tile we clicked.
 
-/datum/action/bloodsucker/targeted/trespass/CheckCanUse(mob/living/carbon/user)
+/datum/action/bloodsucker/targeted/trespass/CheckCanUse(mob/living/carbon/user, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE

@@ -3,6 +3,7 @@
 
 /obj/machinery/atmospherics/components
 	hide = FALSE
+	layer = GAS_PUMP_LAYER
 	///Is the component welded?
 	var/welded = FALSE
 	///Should the component should show the pipe underneath it?
@@ -35,7 +36,7 @@
 	. = ..()
 
 	if(hide)
-		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+		RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(hide_pipe))
 
 // Iconnery
 
@@ -48,9 +49,9 @@
 /**
  * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
  */
-/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, underfloor_accessibility)
 	SIGNAL_HANDLER
-	showpipe = !covered
+	showpipe = !!underfloor_accessibility
 	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()
@@ -59,7 +60,7 @@
 	underlays.Cut()
 
 	color = null
-	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
+	SET_PLANE_IMPLICIT(src, showpipe ? GAME_PLANE : FLOOR_PLANE)
 
 	if(!showpipe)
 		return ..()
@@ -241,7 +242,7 @@
 /obj/machinery/atmospherics/components/paint(paint_color)
 	if(paintable)
 		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
-		pipe_color = paint_color
+		set_pipe_color(paint_color)
 		update_node_icon()
 	return paintable
 
@@ -267,7 +268,6 @@
 	atmos_init()
 	for(var/i in 1 to device_type)
 		var/obj/machinery/atmospherics/node = nodes[i]
-		node = nodes[1]
 		if(node)
 			node.atmos_init()
 			node.add_member(src)
@@ -284,3 +284,6 @@
 		disconnect_nodes()
 		return
 	connect_nodes()
+
+/obj/machinery/atmospherics/components/update_layer()
+	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)

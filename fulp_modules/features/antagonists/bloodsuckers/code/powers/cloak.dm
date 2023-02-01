@@ -2,7 +2,7 @@
 	name = "Cloak of Darkness"
 	desc = "Blend into the shadows and become invisible to the untrained and Artificial eye."
 	button_icon_state = "power_cloak"
-	power_explanation = "<b>Cloak of Darkness</b>:\n\
+	power_explanation = "Cloak of Darkness:\n\
 		Activate this Power in the shadows and you will slowly turn nearly invisible.\n\
 		While using Cloak of Darkness, attempting to run will crush you.\n\
 		Additionally, while Cloak is active, you are completely invisible to the AI.\n\
@@ -16,7 +16,7 @@
 	var/was_running
 
 /// Must have nobody around to see the cloak
-/datum/action/bloodsucker/cloak/CheckCanUse(mob/living/carbon/user)
+/datum/action/bloodsucker/cloak/CheckCanUse(mob/living/carbon/user, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -25,7 +25,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/bloodsucker/cloak/ActivatePower()
+/datum/action/bloodsucker/cloak/ActivatePower(trigger_flags)
 	. = ..()
 	var/mob/living/user = owner
 	was_running = (user.m_intent == MOVE_INTENT_RUN)

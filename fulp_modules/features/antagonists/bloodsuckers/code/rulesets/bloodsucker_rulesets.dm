@@ -13,8 +13,6 @@
 		JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY,
 		// Security
 		JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE,
-		// Deputies
-		JOB_DEPUTY, JOB_DEPUTY_ENG, JOB_DEPUTY_SUP, JOB_DEPUTY_MED, JOB_DEPUTY_SCI, JOB_DEPUTY_SRV,
 		// Curator
 		JOB_CURATOR,
 	)
@@ -56,13 +54,13 @@
 
 /datum/dynamic_ruleset/midround/bloodsucker
 	name = "Vampiric Accident"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/bloodsucker
 	antag_flag = ROLE_VAMPIRICACCIDENT
 	antag_flag_override = ROLE_BLOODSUCKER
 	protected_roles = list(
 		JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY,
 		JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE,
-		JOB_DEPUTY, JOB_DEPUTY_ENG, JOB_DEPUTY_SUP, JOB_DEPUTY_MED, JOB_DEPUTY_SCI, JOB_DEPUTY_SRV,
 		JOB_CURATOR,
 	)
 	restricted_roles = list("AI","Cyborg", "Positronic Brain")
@@ -84,12 +82,12 @@
 
 /datum/dynamic_ruleset/midround/bloodsucker/execute()
 	var/mob/selected_mobs = pick(living_players)
-	assigned += selected_mobs
+	assigned += selected_mobs.mind
 	living_players -= selected_mobs
-	var/datum/mind/bloodsuckermind = selected_mobs
+	var/datum/mind/bloodsuckermind = selected_mobs.mind
 	var/datum/antagonist/bloodsucker/sucker = new
-	if(!bloodsuckermind.make_bloodsucker(selected_mobs))
-		assigned -= selected_mobs
+	if(!bloodsuckermind.make_bloodsucker(selected_mobs.mind))
+		assigned -= selected_mobs.mind
 		message_admins("[ADMIN_LOOKUPFLW(selected_mobs)] was selected by the [name] ruleset, but couldn't be made into a Bloodsucker.")
 		return FALSE
 	sucker.bloodsucker_level_unspent = rand(2,3)
@@ -111,7 +109,6 @@
 	protected_roles = list(
 		JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY,
 		JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE,
-		JOB_DEPUTY, JOB_DEPUTY_ENG, JOB_DEPUTY_SUP, JOB_DEPUTY_MED, JOB_DEPUTY_SCI, JOB_DEPUTY_SRV,
 		JOB_CURATOR,
 	)
 	restricted_roles = list("AI","Cyborg")
@@ -217,7 +214,6 @@
 	return FALSE
 
 /datum/antagonist/bloodsucker/proc/attempt_turn_vassal(mob/living/carbon/convertee, can_vassal_sleeping = FALSE)
-	convertee.silent = 0
 	return make_vassal(convertee, owner, can_vassal_sleeping)
 
 /datum/antagonist/bloodsucker/proc/make_vassal(mob/living/convertee, datum/mind/converter, sleeping = FALSE)
